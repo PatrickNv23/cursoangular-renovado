@@ -1,6 +1,24 @@
 <div class="row">
     <div class="col-12">
-        <app-title-h1 text="LISTA DE USUARIOS"></app-title-h1>
+        <app-title-h1 [text]="title" [priceSoles]="priceSoles" [data]="obj"></app-title-h1>
+        <button class="btn btn-primary" (click)="addAmount()">Agregar 10 soles</button>
+        <p>JSON: {{objPipeJson | json}}</p>
+        <p>Texto con pipe mayúscula: {{stringVar | uppercase}}</p>
+        <p>Texto con pipe minúscula: {{stringVar | lowercase}}</p>
+        <p>Texto con pipe título: {{stringVar | titlecase}}</p>
+        <p>Date: {{dateVar | date}}</p>
+        <p>Date medium : {{dateVar | date:'medium'}}</p>
+        <p>Date full : {{dateVar | date:'full'}}</p>
+        <p>Date shortTime : {{dateVar | date:'shortTime'}}</p>
+        <p>Date mm:ss: {{dateVar | date:'mm:ss'}}</p>
+        <p>Date fulltime: {{dateVar | date:'fullTime'}}</p>
+        <p>Currency: {{currencyVar | currency}}</p>
+        <p>Currency: {{currencyVar | currency:'MXN'}}</p>
+        <p>Decimal: {{decimalVar | number}}</p>
+        <p>Decimal con números de enteros, mínimos y máximos de decimales: {{decimalVar | number:'1.2-5'}}</p>
+        <p>Porcentaje: {{decimalVar | percent}}</p>
+        <!-- Custom pipe -->
+        <p>Custom Pipe: {{user.name | greeting: user.gender:user.role}}</p>
     </div>
     <ng-container *ngIf="users; else elseUsersLoader;">
         <app-card-user [data]="user" *ngFor="let user of users;trackBy: trackByUserId;"
@@ -50,6 +68,8 @@
     <div class="col-12">
         <button [ngClass]="['btn', 'btn-danger', 'mt-3', 'ml-3']" (click)="addNewUser()">Agregar Usuario</button>
     </div>
+
+
 
 </div>
 <div class="container-fluid px-0">

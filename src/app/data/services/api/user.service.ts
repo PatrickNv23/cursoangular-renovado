@@ -9,9 +9,24 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class UserService extends ApiClass {
 
+  private title: string;
+
   /**
    * Get all user from api
    */
+
+  public setTitle(title: string) {
+    this.title = title;
+  }
+
+  public getTitle() {
+    return this.title;
+  }
+
+  public clearTitle() {
+    this.title = 'Nuevo título limpio';
+  }
+
   getAllUsers(): Observable<{
     error: boolean,
     msg: string;

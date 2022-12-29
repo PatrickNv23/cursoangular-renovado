@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ICardUser } from '@shared/components/cards/card-user/icard-user.metadata';
 //import { USERS_DATA } from '@data/constants/users.const';
 import { UserService } from '@data/services/api/user.service';
 import { ICarouselItem } from '@shared/components/carousel/Icarousel-item.metadata';
 import { CAROUSEL_DATA_ITEMS } from '@data/constants/carousel.const';
+import { Subscribable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  public carouselData: ICarouselItem[] = CAROUSEL_DATA_ITEMS;
+  public carouselData: ICarouselItem[];
   public users: ICardUser[]; // USERS_DATA;
   public tasks: { title: string }[] = [
     {
@@ -30,18 +31,72 @@ export class UserListComponent implements OnInit {
   public subtitleStyle = {
     color: 'black'
   }
+  public title: string;
+  public userSubscription: Subscription;
+  public priceSoles: number;
+  public obj: Array<any>;
+
+  // variables para el ejemplo de PIPES
+  public stringVar: string;
+  public dateVar: number;
+  public currencyVar: number;
+  public decimalVar: number;
+  public objPipeJson: Array<any>;
+  //Custom PIPE
+  public user: {
+    name: string;
+    gender: 'M' | 'F';
+    role: string;
+  }
 
   constructor(
     private userService: UserService
   ) {
-    this.userService.getAllUsers().subscribe(r => {
-      if (!r.error) {
-        this.users = r.data;
-      }
-    });
+    this.carouselData = CAROUSEL_DATA_ITEMS;
+    this.userService.setTitle("Lista de Usuarios");
+    this.title = this.userService.getTitle();
+    this.priceSoles = 0;
+    this.obj = [{ id: 1, name: 'primero', joinDate: 1599935113003 }],
+      this.objPipeJson = [{ id: 1, name: 'primero', joinDate: 1599935113003 }]
+    this.stringVar = 'Hola es un curso de angular';
+    this.dateVar = (new Date()).getTime();
+    this.currencyVar = 123456.20;
+    this.decimalVar = 123123474743.3459;
+    this.user = {
+      name: 'Paco Gonzales',
+      gender: 'M',
+      role: 'Administrador'
+    }
+  }
+  ngAfterViewInit(): void {
+    console.log("After view init - User List Component")
   }
 
   ngOnInit() {
+    this.getUsers();
+    console.log("ngOnInit - UserListComponent")
+  }
+
+  addAmount() {
+    this.priceSoles += 10;
+    this.obj.push({
+      id: this.obj.length + 1,
+      name: 'otro',
+      joinDate: 1599935113003
+    })
+  }
+
+  getUsers() {
+    this.userSubscription = this.userService
+      .getAllUsers()
+      .subscribe(r => this.users = (r.error) ? [] : r.data);
+  }
+
+  ngOnDestroy(): void {
+    this.userService.clearTitle();
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   public trackByUserId(index, item) {

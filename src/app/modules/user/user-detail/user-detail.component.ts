@@ -14,11 +14,13 @@ export class UserDetailComponent implements OnInit {
   public users: ICardUser[];
   public id: number;
   public currentUser: ICardUser;
+  public title: string;
   constructor(
     private route: ActivatedRoute,
     private userService: UserService
   ) {
     this.id = +this.route.snapshot.params.id;
+    this.title = userService.getTitle();
   }
 
   ngOnInit() {

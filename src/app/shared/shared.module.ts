@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import * as fromComponents from './components';
+import * as fromPipes from './pipes';
 import { RouterModule } from '@angular/router';
 
 
@@ -15,14 +16,15 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule
   ],
-  declarations: [...fromComponents.components],
+  declarations: [...fromComponents.components, ...fromPipes.pipes],
   exports: [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
     RouterModule,
-    ...fromComponents.components
+    ...fromComponents.components,
+    ...fromPipes.pipes
   ]
 })
 export class SharedModule { }
