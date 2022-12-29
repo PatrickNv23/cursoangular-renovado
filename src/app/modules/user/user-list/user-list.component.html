@@ -3,13 +3,54 @@
         <app-title-h1 text="LISTA DE USUARIOS"></app-title-h1>
     </div>
     <ng-container *ngIf="users; else elseUsersLoader;">
-        <app-card-user [data]="user" *ngFor="let user of users;" class="col-12 col-md-6 col-xl-3"></app-card-user>
+        <app-card-user [data]="user" *ngFor="let user of users;trackBy: trackByUserId;"
+            class="col-12 col-md-6 col-xl-3">
+        </app-card-user>
     </ng-container>
+
+    <div class="col-12">
+        <button class="btn btn-primary mt-3 ml-3" (click)="addNewUser()">Agregar Usuario</button>
+    </div>
 
     <ng-template #elseUsersLoader>
         <app-card-loader class="col-12 col-md-6 col-xl-3" [bars]="4" [barHeight]="7" *ngFor="let i of [0,1,2,3,4,5,6]">
         </app-card-loader>
     </ng-template>
+
+    <!-- explicacion *ngFor e index-->
+    <div class="row">
+        <div class="col-12">
+            <h1>Lista de tareas</h1>
+        </div>
+        <div class="col-12" *ngFor="let task of tasks; index as i">
+            <p>#{{i}} - {{task.title}}</p>
+        </div>
+    </div>
+
+
+    <!-- explicación propiedad first and last de *ngFor -->
+
+    <div class="row">
+        <div class="col-12">
+            <h1>Opciones de días</h1>
+        </div>
+        <div class="col-12" *ngFor="let option of options;first as isFirst; last as isLast">
+            <h2>{{option}} {{isFirst || isLast ? 'día' : 'días'}}</h2>
+        </div>
+    </div>
+
+    <!-- explicación de ngStyle -->
+    <h2 [ngStyle]="subtitleStyle">SUBTITULO LISTO PARA CAMBIAR DE COLOR</h2>
+    <div>
+        <button (click)="changeButtonToBlueColor()">Cambiar subtítulo a color azul</button>
+        <button (click)="changeButtonToRedColor()">Cambiar subtitulo a color rojo</button>
+    </div>
+
+    <!-- explicación de ngClass -->
+    <div class="col-12">
+        <button [ngClass]="['btn', 'btn-danger', 'mt-3', 'ml-3']" (click)="addNewUser()">Agregar Usuario</button>
+    </div>
+
 </div>
 <div class="container-fluid px-0">
     <div class="row bg-dark h-100">

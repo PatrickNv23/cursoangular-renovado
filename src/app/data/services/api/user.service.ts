@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiClass } from '@data/schema/ApiClass..class';
 import { Observable } from 'rxjs';
 import { ICardUser } from '@shared/components/cards/card-user/icard-user.metadata';
-import {catchError, map} from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +17,20 @@ export class UserService extends ApiClass {
     msg: string;
     data: ICardUser[]
   }> {
-    const response = {error: false, msg: '', data: null};
+    const response = { error: false, msg: '', data: null };
     return this.http.get<ICardUser[]>(this.url + 'users')
-    .pipe(
-      map( r => {
-        response.data = r;
-        return response;
-      }),
-      catchError(this.error)
-    );
+      .pipe(
+        map(r => {
+          response.data = r;
+          r.map(i => {
+            if (i.gender === '' || i.gender === null) {
+              i.gender = 'No encontrado';
+            }
+          })
+          return response;
+        }),
+        catchError(this.error)
+      );
   }
 
   /**
@@ -37,13 +42,13 @@ export class UserService extends ApiClass {
     msg: string,
     data: ICardUser
   }> {
-    const response = {error: false, msg: '', data: null};
+    const response = { error: false, msg: '', data: null };
     return this.http.get<ICardUser>(this.url + 'users/' + id)
       .pipe(
-        map( r => {
-            response.data = r;
-            return response;
-          }
+        map(r => {
+          response.data = r;
+          return response;
+        }
         ),
         catchError(this.error)
       );
