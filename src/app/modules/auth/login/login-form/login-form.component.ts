@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '@data/services/api/auth.service';
 //import { CONST_LOGIN_PAGE } from '@data/constants';
 
 @Component({
@@ -23,17 +24,17 @@ export class LoginFormComponent implements OnInit {
   public loginForm;
   public loginSubmitted = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.pattern(/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/)]],
       password: ['', [Validators.required, Validators.maxLength(10)]],
-      person: this.formBuilder.group({
-        name: ['', [Validators.required, Validators.maxLength(35)]],
-        lastname: ['', [Validators.required, Validators.maxLength(35)]]
-      }),
-      interests: this.formBuilder.array([
-        this.formBuilder.control('', [Validators.required, Validators.minLength(10)])
-      ])
+      // person: this.formBuilder.group({
+      //   name: ['', [Validators.required, Validators.maxLength(35)]],
+      //   lastname: ['', [Validators.required, Validators.maxLength(35)]]
+      // }),
+      // interests: this.formBuilder.array([
+      //   this.formBuilder.control('', [Validators.required, Validators.minLength(10)])
+      // ])
     });
   }
   ngOnInit(): void {
@@ -46,6 +47,9 @@ export class LoginFormComponent implements OnInit {
       return;
     }
     console.log('Authenticate');
+    this.authService.login(this.loginForm.value).subscribe(r => {
+      console.log(r);
+    })
   }
 
   get form() {

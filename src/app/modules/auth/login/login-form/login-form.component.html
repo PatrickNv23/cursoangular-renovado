@@ -24,7 +24,7 @@
 
 <form [formGroup]="loginForm" (ngSubmit)="authenticate()">
   <!-- field person -->
-  <div formGroupName="person">
+  <!-- <div formGroupName="person">
     <div>
       <label>Nombre: </label>
       <input type="text" placeholder="Nombre" formControlName="name">
@@ -45,7 +45,7 @@
         </ng-container>
       </small>
     </div>
-  </div>
+  </div> -->
 
   <!-- field email -->
   <div>
@@ -70,7 +70,7 @@
     </small>
   </div>
   <!-- field intereses formArray -->
-  <div formArrayName="interests">
+  <!-- <div formArrayName="interests">
     <button (click)="addInterest()" type="button">Agregar</button>
     <ng-container *ngFor="let interest of interests.controls; let i= index;">
       <div>
@@ -85,7 +85,7 @@
       </div>
     </ng-container>
 
-  </div>
+  </div> -->
   <small>Olvidé la contraseña</small>
   <div>
     <button>Registrarse</button>
