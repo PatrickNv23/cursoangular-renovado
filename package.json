@@ -7,7 +7,7 @@
     "start:prod": "ng serve --c=prod",
     "build:dev": "ng build --c=dev",
     "build:prod": "ng build --c=prod",
-    "test": "ng test",
+    "test": "ng test --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "backend": "json-server --watch ./src/app/data/backend/db.json"

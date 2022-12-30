@@ -79,3 +79,19 @@
         </div>
     </div>
 </div>
+
+<app-solid-button [title]="Guardar" [type]="$btnTypes.SUCCESS" (action)="actions($event)" #mainButton>
+
+</app-solid-button>
+
+<app-solid-button [title]="Editar" [type]="$btnTypes.PRIMARY" (action)="actions($event)">
+
+</app-solid-button>
+
+<app-solid-button [title]="Eliminar" [type]="$btnTypes.DANGER" [url]="'/panel/user'" (action)="actions($event)">
+
+</app-solid-button>
+
+<div #container>
+    Hola es un container
+</div>

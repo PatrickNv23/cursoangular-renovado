@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ICardUser } from '@shared/components/cards/card-user/icard-user.metadata';
 //import { USERS_DATA } from '@data/constants/users.const';
 import { UserService } from '@data/services/api/user.service';
 import { ICarouselItem } from '@shared/components/carousel/Icarousel-item.metadata';
 import { CAROUSEL_DATA_ITEMS } from '@data/constants/carousel.const';
 import { Subscribable, Subscription } from 'rxjs';
+import { SOLID_BUTTON_TYPE_ENUM } from '@shared/components/buttons/solid-button/solid-button-type.enum';
+import { SolidButtonComponent } from '@shared/components';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -48,6 +50,11 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
     gender: 'M' | 'F';
     role: string;
   }
+
+  //Extras
+  public $btnTypes = SOLID_BUTTON_TYPE_ENUM;
+  @ViewChild('mainButton', null) mainButton: SolidButtonComponent;
+  @ViewChild('container', null) container: ElementRef;
 
   constructor(
     private userService: UserService
@@ -121,6 +128,24 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public changeButtonToRedColor() {
     this.subtitleStyle.color = 'red';
+  }
+
+
+  actions(events: SOLID_BUTTON_TYPE_ENUM) {
+    switch (events) {
+      case SOLID_BUTTON_TYPE_ENUM.SUCCESS:
+        console.log("Ejecutando método success");
+        break;
+      case SOLID_BUTTON_TYPE_ENUM.PRIMARY:
+        console.log("Ejecutando método primary");
+        break;
+      case SOLID_BUTTON_TYPE_ENUM.DANGER:
+        console.log("Ejecutando método danger");
+        break;
+    }
+
+    this.mainButton.title = 'Actualizar';
+    this.container.nativeElement.style.display = 'none'
   }
 
 }
