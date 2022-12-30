@@ -1,0 +1,19 @@
+<div>
+  <label>Email: </label>
+  <input type="email" placeholder="Email" [(ngModel)]="loginForm.email.value" #email="ngModel">
+  <small class="bg-danger text-light mt-1 px-2 py-1 rounded"
+    *ngIf="!loginForm.email.isValid() && email.touched">{{loginForm.email.error
+    }}</small>
+</div>
+<div>
+  <label for="">Contraseña: </label>
+  <input type="password" placeholder="Contraseña" [(ngModel)]="loginForm.password.value">
+  <small class="bg-danger text-light mt-1 px-2 py-1 rounded"
+    *ngIf="!loginForm.password.isValid() && email.touched">{{loginForm.password.error
+    }}</small>
+</div>
+<small>Olvidé la contraseña</small>
+<div>
+  <button>Registrarse</button>
+  <button [disabled]="!isValidForm()" (click)="authenticate()">Login</button>
+</div>

@@ -6,8 +6,12 @@ import { SkeletonComponent } from '@layout/skeleton/skeleton.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/panel/user',
+    redirectTo: '/auth/login',
     pathMatch: 'full'
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('@modules/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'panel',
@@ -16,24 +20,24 @@ const routes: Routes = [
       {
         path: 'user',
         loadChildren: () =>
-          import('@modules/user/user.module').then( (m) => m.UserModule)
+          import('@modules/user/user.module').then((m) => m.UserModule)
       },
-      {
-        path: '**',
-        redirectTo: '/panel/user',
-        pathMatch: 'full'
-      }
+      // {
+      //   path: '**',
+      //   redirectTo: '/panel/user',
+      //   pathMatch: 'full'
+      // }
     ]
   },
   {
     path: '**',
-    redirectTo: '/panel/user',
+    redirectTo: '/auth/login',
     pathMatch: 'full'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
