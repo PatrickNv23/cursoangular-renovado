@@ -1,4 +1,6 @@
-<div>
+<!-- login con ngModel -->
+
+<!-- <div>
   <label>Email: </label>
   <input type="email" placeholder="Email" [(ngModel)]="loginForm.email.value" #email="ngModel">
   <small class="bg-danger text-light mt-1 px-2 py-1 rounded"
@@ -16,4 +18,77 @@
 <div>
   <button>Registrarse</button>
   <button [disabled]="!isValidForm()" (click)="authenticate()">Login</button>
-</div>
+</div> -->
+
+<!-- login con reactive Forms -->
+
+<form [formGroup]="loginForm" (ngSubmit)="authenticate()">
+  <!-- field person -->
+  <div formGroupName="person">
+    <div>
+      <label>Nombre: </label>
+      <input type="text" placeholder="Nombre" formControlName="name">
+      <small class="bg-danger text-light mt-1 px-2 py-1 rounded" *ngIf="formPerson.name.errors && loginSubmitted">
+        <ng-container [ngSwitch]="formPerson.name.value">
+          <ng-container *ngSwitchCase="''">El nombre está vacío!</ng-container>
+          <ng-container *ngSwitchDefault>El nombre debe tener máximo 35 caracteres</ng-container>
+        </ng-container>
+      </small>
+    </div>
+    <div>
+      <label>Apellido: </label>
+      <input type="text" placeholder="Apellidos" formControlName="lastname">
+      <small class="bg-danger text-light mt-1 px-2 py-1 rounded" *ngIf="formPerson.lastname.errors && loginSubmitted">
+        <ng-container [ngSwitch]="formPerson.lastname.value">
+          <ng-container *ngSwitchCase="''">El apellido está vacío!</ng-container>
+          <ng-container *ngSwitchDefault>El apellido debe tener máximo 35 caracteres</ng-container>
+        </ng-container>
+      </small>
+    </div>
+  </div>
+
+  <!-- field email -->
+  <div>
+    <label>Email: </label>
+    <input type="email" placeholder="Email" formControlName="email">
+    <small class="bg-danger text-light mt-1 px-2 py-1 rounded" *ngIf="form.email.errors && loginSubmitted">
+      <ng-container [ngSwitch]="form.email.value">
+        <ng-container *ngSwitchCase="''">El email está vacío!</ng-container>
+        <ng-container *ngSwitchDefault>El email es inválido!</ng-container>
+      </ng-container>
+    </small>
+  </div>
+  <!-- field password -->
+  <div>
+    <label for="">Contraseña: </label>
+    <input type="password" placeholder="Contraseña" formControlName="password">
+    <small class="bg-danger text-light mt-1 px-2 py-1 rounded" *ngIf="form.password.errors && loginSubmitted">
+      <ng-container [ngSwitch]="form.password.value">
+        <ng-container *ngSwitchCase="''">El password es requerido</ng-container>
+        <ng-container *ngSwitchDefault>El password debe tener máximo 10 caracteres</ng-container>
+      </ng-container>
+    </small>
+  </div>
+  <!-- field intereses formArray -->
+  <div formArrayName="interests">
+    <button (click)="addInterest()" type="button">Agregar</button>
+    <ng-container *ngFor="let interest of interests.controls; let i= index;">
+      <div>
+        <label>Intereses: <span (click)="removeInterest(i)">X</span> </label>
+        <input type="text" placeholder="Intereses" [formControlName]="i">
+        <small class="bg-danger text-light mt-1 px-2 py-1 rounded" *ngIf="interest.errors && loginSubmitted">
+          <ng-container [ngSwitch]="interest.value">
+            <ng-container *ngSwitchCase="''">El interés está vacío!</ng-container>
+            <ng-container *ngSwitchDefault>El interés debe tener almenos 10 caractéres!</ng-container>
+          </ng-container>
+        </small>
+      </div>
+    </ng-container>
+
+  </div>
+  <small>Olvidé la contraseña</small>
+  <div>
+    <button>Registrarse</button>
+    <button type=" submit">Login</button>
+  </div>
+</form>
